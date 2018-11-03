@@ -7,29 +7,31 @@ Ex: "Hi John, this is a friendly reminder that your account is up for renewal in
 
 ### DB Strucutre:
 
+user table:
+email
+password
 
 Customers table:
 ID
-First
-Last
-Gender
-Marital_status
-Renewal date
-Price
+firstName
+lastName
 phone
-
+renewalDate
+price
+activeNotifications
 
 
 Notification table:
 ID
 USER_ID
-Month
-nofied - T/F
-paid - T/F
+service
+month
+createdAt
+notified
 Notes
-HasReceivedSMS
 
 ### Phone.com API structure
+
 {
     "id": "53a58467-7023-11e4-b9e5-b7869fba3bc9",
     "from": "+17327704200",
@@ -49,4 +51,9 @@ HasReceivedSMS
 
 
 
-Contributors: Hector J. Saldana, Earle Poole, Biko Allen
+Contributors: 
+Hector J. Saldana (@electricgnome)
+Earle Poole (@Emjp4)
+Biko Allen (@kobi1021)
+Yetunde Sola-Adebayo (@yetunde79)
+Joshua Medeski (@joshmedeski)
