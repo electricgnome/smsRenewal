@@ -20,6 +20,7 @@ var config = {
   messagingSenderId: "45552393564"
 };
 
+
 firebase.initializeApp(config);
 firebase.auth().onAuthStateChanged(function(user) {
   if (!app) {
@@ -33,3 +34,4 @@ firebase.auth().onAuthStateChanged(function(user) {
     });
   }
 });
+
