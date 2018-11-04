@@ -3,46 +3,30 @@
     <v-toolbar
       color="primary"
       dark
-      extended
       flat
     >
+      <v-spacer></v-spacer>
+     <v-toolbar-items class="hidden-sm-and-down">
+     
+      <v-btn flat @click="logout()">Logout</v-btn>
+    </v-toolbar-items>
     </v-toolbar>
 
-    <v-layout row pb-2>
-      <v-flex xs8 offset-xs2>
-        <v-card class="card--flex-toolbar">
-          <v-toolbar card prominent>
-            <v-toolbar-title class="body-2 grey--text">Title</v-toolbar-title>
+    <Customers></Customers>
 
-            <v-spacer></v-spacer>
 
-            <v-btn icon>
-              <v-icon>search</v-icon>
-            </v-btn>
-
-            <v-btn icon>
-              <v-icon>apps</v-icon>
-            </v-btn>
-
-            <v-btn icon>
-              <v-icon>more_vert</v-icon>
-            </v-btn>
-          </v-toolbar>
-
-          <v-divider></v-divider>
-
-          <v-card-text style="height: 200px;"></v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
   </v-card>
 </template>
 
 <script>
 import firebase from "firebase";
+import Customers from './Customers'
 
 export default {
   name: "main",
+  components:{
+    Customers
+  },
   data() {
     return {
       msg: "Welcome to Your Renewal Reminder Account"
