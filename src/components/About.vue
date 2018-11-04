@@ -1,15 +1,15 @@
 <template>
-    <div>
-        <h1>About</h1>
-        <p>We remind your customers to pay for your montly services</p>
-        <p>This was created during the JAMstack hackaton in Houston</p>
+    <div class="container about">
+        <h1 id="about_h1">About</h1>
+        <p class="about_para">Service Reminder reminds your customers to pay for your montly services, so you don't need to get on the phone with them every month</p>
+        <p class="about_para">This was created during the JAMstack hackaton in Houston</p>
         <h2>The Team</h2>
-        <ul>
-            <li> electricgnome </li>
-            <li>joshmedeski</li>
+        <ul class="about_para">
+            <li> Hecktor J. Saldana </li>
+            <li>Biko Allen</li>
             <li>Yetunde Sola-Adebayo</li>
-            <li>James</li>
-            <li>Kobli</li>
+            <li>Earle Poole</li>
+            <li>Josh Medeski</li>
         </ul>
     </div>
 </template>
@@ -27,4 +27,13 @@ export default {
 
 
 <style>
+.about {
+  font-family: "Rokkitt", serif;
+}
+#about_h1 {
+  text-align: center;
+}
+.about_para {
+  font-size: 1.5em;
+}
 </style>
