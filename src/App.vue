@@ -39,7 +39,7 @@ export default {
     return {
       sideNav: false,
       menuItems: [
-        { title: "Home", link: "/main" },
+        { title: "Home", link: "/home" },
         { title: "About", link: "/about" },
         { title: "Contact", link: "/contact" },
         { title: "Sign Up", link: "/sign-up" }

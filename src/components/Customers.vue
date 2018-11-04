@@ -24,33 +24,20 @@
                                 <v-text-field v-model="editedItem.phone" label="Phone"></v-text-field>
                             </v-flex>
 
-
-                            <!-- <v-flex xs12 sm6 md4>
-                                <v-text-field v-model="editedItem.carrier" label="carrier"></v-text-field>
-                            </v-flex>
                             <v-flex xs12 sm6 md4>
-                                <v-text-field v-model="editedItem.policyNo" label="policyNo"></v-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm6 md4>
-                                <v-text-field v-model="editedItem.inceptionDate" label="inceptionDate"></v-text-field>
-                            </v-flex> -->
+                              <v-menu ref="date" :close-on-content-click="false" v-model="date" :nudge-right="40" :return-value.sync="editedItem.payDay" lazy transition="scale-transition" offset-y full-width min-width="290px">
+                                <v-text-field slot="activator" v-model="editedItem.payDay" label="Pay Date" prepend-icon="event" readonly requiered></v-text-field>
+                                <v-date-picker v-model="editedItem.payDay" @input="$refs.date.save(editedItem.payDay)"></v-date-picker>
+                            </v-menu>
+                             </v-flex>
 
                             <v-flex xs12 sm6 md4>
-                                <v-text-field v-model="editedItem.payDay" label="payDay"></v-text-field>
+                                <v-text-field v-model="editedItem.amount" label="Amount"></v-text-field>
                             </v-flex>
-
-                            <v-flex xs12 sm6 md4>
-                                <v-text-field v-model="editedItem.policyStatus" label="Account Status"></v-text-field>
-                            </v-flex>
-                            <!-- <v-flex xs12 sm6 md4>
-                                <v-text-field v-model="editedItem.pendingItems" label="pendingItems"></v-text-field>
-                            </v-flex> -->
+                        
                             <v-flex xs12 sm6 md4>
                                 <v-text-field v-model="editedItem.notes" label="notes"></v-text-field>
                             </v-flex>
-                            <!-- <v-flex xs12 sm6 md4>
-                                <v-text-field v-model="editedItem.agent" label="agent"></v-text-field>
-                            </v-flex> -->
 
                         </v-layout>
                     </v-container>
@@ -69,15 +56,9 @@
             <td>{{ props.item.firstName }}</td>
             <td class="text-xs-left">{{ props.item.lastName }}</td>
             <td class="text-xs-left">{{ props.item.phone }}</td>
-            <!-- <td class="text-xs-left">{{ props.item.carrier }}</td>
-            <td class="text-xs-left">{{ props.item.policyNo }}</td>
-            <td class="text-xs-left">{{ props.item.inceptionDate }}</td> -->
             <td class="text-xs-left">{{ props.item.payDay }}</td>
-            <td class="text-xs-left">{{ props.item.policyStatus }}</td>
-            <!-- <td class="text-xs-left">{{ props.item.pendingItems }}</td> -->
+            <td class="text-xs-left">{{ props.item.amount }}</td>
             <td class="text-xs-left">{{ props.item.notes }}</td>
-            <!-- <td class="text-xs-left">{{ props.item.agent }}</td> -->
-
             <td class="justify-center layout px-0">
                 <v-icon small class="mr-2" @click="editItem(props.item)">
                     edit
@@ -87,22 +68,18 @@
                 </v-icon>
             </td>
         </template>
-        <template slot="no-data">
-            <v-btn color="primary" @click="initialize">Reset</v-btn>
-        </template>
+       
     </v-data-table>
 </div>
 </template>
 
 <script>
-// import {db} from '../main'
+import axios from 'axios'
 
 export default {
-    // firebase: {
-    // customers: db.ref('customers')
-    // },
-
+  
   data: () => ({
+    date:false,
     dialog: false,
     headers: [
       {
@@ -119,72 +96,42 @@ export default {
         text: "phone",
         value: "phone"
       },
-    //   {
-    //     text: "carrier",
-    //     value: "carrier"
-    //   },
-    //   {
-    //     text: "policyNo",
-    //     value: "policyNo"
-    //   },
-    //   {
-    //     text: "inceptionDate",
-    //     value: "inceptionDate"
-    //   },
       {
         text: "payDay",
         value: "payDay"
       },
       {
-        text: "Account Status",
-        value: "policyStatus"
+        text: "Amount",
+        value: "amount"
       },
-    //   {
-    //     text: "pendingItems",
-    //     value: "pendingItems"
-    //   },
       {
         text: "notes",
         value: "notes"
       },
-    //   {
-    //     text: "agent",
-    //     value: "agent"
-    //   },
       {
         text: "Actions",
         value: "Action",
         sortable: false
       }
     ],
-    customerData: [],
+    customerData: [], //kill this
     customers: [],
     editedIndex: -1,
     editedItem: {
       firstName: "",
       lastName: "",
       phone: 0,
-    //   carrier: "",
-    //   policyNo: "",
-    //   inceptionDate: "",
-      payDay: "",
-      policyStatus: "",
-    //   pendingItems: [],
+      payDay: null,
+      amount: "",
       notes: [],
-    //   agent: ""
     },
     defaultItem: {
       firstName: "",
       lastName: "",
       phone: 0,
-    //   carrier: "",
-    //   policyNo: "",
-    //   inceptionDate: "",
-      payDay: "",
-      policyStatus: "",
-    //   pendingItems: [],
+      payDay: null,
+      amount: "",
       notes: [],
-    //   agent: ""
     }
   }),
 
@@ -192,6 +139,7 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? "New Customer" : "Edit Customer";
     }
+
   },
 
   watch: {
@@ -201,9 +149,6 @@ export default {
   },
 
   methods: {
-    initialize() {
-     
-    },
 
     editItem(item) {
       this.editedIndex = this.customers.indexOf(item);
@@ -212,9 +157,11 @@ export default {
     },
 
     deleteItem(item) {
+      console.log(item)
       const index = this.customers.indexOf(item);
       confirm("Are you sure you want to delete this customer?") &&
         this.customers.splice(index, 1);
+        axios.delete(`/api/${item._id}`)
     },
 
     close() {
@@ -227,25 +174,41 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
+
+        axios.put(`/api/${this.editedItem._id}`, this.editedItem)
+        console.log(this.editedItem)
+
         Object.assign(this.customers[this.editedIndex], this.editedItem);
       } else {
+        axios.post("/api", { firstName: this.editedItem.firstName, lastName:this.editedItem.lastName, phone: this.editedItem.phone, payDay: this.editedItem.payDay, amount: this.editedItem.amount, notes:this.editedItem.notes })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
         this.customers.push(this.editedItem);
       }
       this.close();
     },
-    getCustomers() {
-      // firstName:,
-      // lastName:,
-      // phone:,
-      // carrier:,
-      // policyNo:,
-      // inceptionDate:,
-      // payDay:'',
-      // policyStatus:,
-      // pendingItems:'',
-      // notes:'',
-      // agent:,
-    }
+
+   
+  },
+
+  created() {
+    let self = this;
+    axios
+      .get("/api")
+      .then(function(res) {
+        let customers =res.data;
+        self.customers = customers;
+        console.log(self.customers)
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+
+  
   },
   
    

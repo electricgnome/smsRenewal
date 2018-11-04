@@ -23,7 +23,7 @@ import firebase from "firebase";
 import Customers from './Customers'
 
 export default {
-  name: "main",
+  name: "home",
   components:{
     Customers
   },
