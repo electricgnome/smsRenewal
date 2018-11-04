@@ -23,31 +23,34 @@
                             <v-flex xs12 sm6 md4>
                                 <v-text-field v-model="editedItem.phone" label="Phone"></v-text-field>
                             </v-flex>
-                            <v-flex xs12 sm6 md4>
+
+
+                            <!-- <v-flex xs12 sm6 md4>
                                 <v-text-field v-model="editedItem.carrier" label="carrier"></v-text-field>
                             </v-flex>
                             <v-flex xs12 sm6 md4>
                                 <v-text-field v-model="editedItem.policyNo" label="policyNo"></v-text-field>
                             </v-flex>
-
                             <v-flex xs12 sm6 md4>
                                 <v-text-field v-model="editedItem.inceptionDate" label="inceptionDate"></v-text-field>
-                            </v-flex>
+                            </v-flex> -->
+
                             <v-flex xs12 sm6 md4>
                                 <v-text-field v-model="editedItem.payDay" label="payDay"></v-text-field>
                             </v-flex>
+
                             <v-flex xs12 sm6 md4>
-                                <v-text-field v-model="editedItem.policyStatus" label="policyStatus"></v-text-field>
+                                <v-text-field v-model="editedItem.policyStatus" label="Account Status"></v-text-field>
                             </v-flex>
-                            <v-flex xs12 sm6 md4>
+                            <!-- <v-flex xs12 sm6 md4>
                                 <v-text-field v-model="editedItem.pendingItems" label="pendingItems"></v-text-field>
-                            </v-flex>
+                            </v-flex> -->
                             <v-flex xs12 sm6 md4>
                                 <v-text-field v-model="editedItem.notes" label="notes"></v-text-field>
                             </v-flex>
-                            <v-flex xs12 sm6 md4>
+                            <!-- <v-flex xs12 sm6 md4>
                                 <v-text-field v-model="editedItem.agent" label="agent"></v-text-field>
-                            </v-flex>
+                            </v-flex> -->
 
                         </v-layout>
                     </v-container>
@@ -64,16 +67,16 @@
     <v-data-table :headers="headers" :items="customers" hide-actions class="elevation-1">
         <template slot="items" slot-scope="props">
             <td>{{ props.item.firstName }}</td>
-            <td class="text-xs-right">{{ props.item.lastName }}</td>
-            <td class="text-xs-right">{{ props.item.phone }}</td>
-            <td class="text-xs-right">{{ props.item.carrier }}</td>
-            <td class="text-xs-right">{{ props.item.policyNo }}</td>
-            <td class="text-xs-right">{{ props.item.inceptionDate }}</td>
-            <td class="text-xs-right">{{ props.item.payDay }}</td>
-            <td class="text-xs-right">{{ props.item.policyStatus }}</td>
-            <td class="text-xs-right">{{ props.item.pendingItems }}</td>
-            <td class="text-xs-right">{{ props.item.notes }}</td>
-            <td class="text-xs-right">{{ props.item.agent }}</td>
+            <td class="text-xs-left">{{ props.item.lastName }}</td>
+            <td class="text-xs-left">{{ props.item.phone }}</td>
+            <!-- <td class="text-xs-left">{{ props.item.carrier }}</td>
+            <td class="text-xs-left">{{ props.item.policyNo }}</td>
+            <td class="text-xs-left">{{ props.item.inceptionDate }}</td> -->
+            <td class="text-xs-left">{{ props.item.payDay }}</td>
+            <td class="text-xs-left">{{ props.item.policyStatus }}</td>
+            <!-- <td class="text-xs-left">{{ props.item.pendingItems }}</td> -->
+            <td class="text-xs-left">{{ props.item.notes }}</td>
+            <!-- <td class="text-xs-left">{{ props.item.agent }}</td> -->
 
             <td class="justify-center layout px-0">
                 <v-icon small class="mr-2" @click="editItem(props.item)">
@@ -92,15 +95,20 @@
 </template>
 
 <script>
+// import {db} from '../main'
 
 export default {
+    // firebase: {
+    // customers: db.ref('customers')
+    // },
+
   data: () => ({
     dialog: false,
     headers: [
       {
         text: "First Name",
         align: "left",
-        sortable: false,
+        sortable: true,
         value: "firstName" + "lastName"
       },
       {
@@ -111,41 +119,41 @@ export default {
         text: "phone",
         value: "phone"
       },
-      {
-        text: "carrier",
-        value: "carrier"
-      },
-      {
-        text: "policyNo",
-        value: "policyNo"
-      },
-      {
-        text: "inceptionDate",
-        value: "inceptionDate"
-      },
+    //   {
+    //     text: "carrier",
+    //     value: "carrier"
+    //   },
+    //   {
+    //     text: "policyNo",
+    //     value: "policyNo"
+    //   },
+    //   {
+    //     text: "inceptionDate",
+    //     value: "inceptionDate"
+    //   },
       {
         text: "payDay",
         value: "payDay"
       },
       {
-        text: "policyStatus",
+        text: "Account Status",
         value: "policyStatus"
       },
-      {
-        text: "pendingItems",
-        value: "pendingItems"
-      },
+    //   {
+    //     text: "pendingItems",
+    //     value: "pendingItems"
+    //   },
       {
         text: "notes",
         value: "notes"
       },
-      {
-        text: "agent",
-        value: "agent"
-      },
+    //   {
+    //     text: "agent",
+    //     value: "agent"
+    //   },
       {
         text: "Actions",
-        value: "firstName",
+        value: "Action",
         sortable: false
       }
     ],
@@ -156,27 +164,27 @@ export default {
       firstName: "",
       lastName: "",
       phone: 0,
-      carrier: "",
-      policyNo: "",
-      inceptionDate: "",
+    //   carrier: "",
+    //   policyNo: "",
+    //   inceptionDate: "",
       payDay: "",
       policyStatus: "",
-      pendingItems: [],
+    //   pendingItems: [],
       notes: [],
-      agent: ""
+    //   agent: ""
     },
     defaultItem: {
       firstName: "",
       lastName: "",
       phone: 0,
-      carrier: "",
-      policyNo: "",
-      inceptionDate: "",
+    //   carrier: "",
+    //   policyNo: "",
+    //   inceptionDate: "",
       payDay: "",
       policyStatus: "",
-      pendingItems: [],
+    //   pendingItems: [],
       notes: [],
-      agent: ""
+    //   agent: ""
     }
   }),
 
