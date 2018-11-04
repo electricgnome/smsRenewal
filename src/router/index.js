@@ -4,6 +4,7 @@ import Router from "vue-router";
 import Main from "@/components/Main";
 import Login from "@/components/Login";
 import SignUp from "@/components/SignUp";
+import About from "@/components/About";
 import firebase from "firebase";
 
 Vue.use(Router);
@@ -35,6 +36,11 @@ let router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: "/about",
+      name: "About",
+      component: About
     }
   ]
 });

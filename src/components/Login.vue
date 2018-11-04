@@ -38,19 +38,19 @@ export default {
     };
   },
   methods: {
-    signIn: function() {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(
-          user => {
-            this.$router.replace("main");
-          },
-          err => {
-            alert("Oops. " + err.message);
-          }
-        );
-    }
+    // signIn: function() {
+    //   firebase
+    //     .auth()
+    //     .signInWithEmailAndPassword(this.email, this.password)
+    //     .then(
+    //       user => {
+    //         this.$router.replace("main");
+    //       },
+    //       err => {
+    //         alert("Oops. " + err.message);
+    //       }
+    //     );
+    // }
   }
 };
 </script>

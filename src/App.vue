@@ -5,6 +5,12 @@
         <span>Renewal</span>
         <span class="font-weight-light">Reminder</span>
       </v-toolbar-title>
+
+       <v-toolbar-items>
+        <v-btn>Button 1</v-btn>
+        <v-btn>Button 2</v-btn>
+      </v-toolbar-items>
+      
     </v-toolbar>
 
     <v-content>
